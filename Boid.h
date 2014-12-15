@@ -46,6 +46,7 @@ class Boid
     //                               Constructors
     // =======================================================================
     Boid(void);
+    Boid(Agent firstAgent);
 
     // =======================================================================
     //                                Destructor
@@ -71,6 +72,9 @@ class Boid
     // Operators
     const Agent& operator[] (int pos) const;
 
+    // Method
+    void AddAgent(Agent newAgent);
+
     // =======================================================================
     //                             Public Attributes
     // =======================================================================
@@ -90,11 +94,11 @@ class Boid
       printf("%s:%d: error: call to forbidden constructor.\n", __FILE__, __LINE__);
       exit(EXIT_FAILURE);
     };*/
-    Boid(const Boid &model)
+    /*Boid(const Boid &model)
     {
       printf("%s:%d: error: call to forbidden constructor.\n", __FILE__, __LINE__);
       exit(EXIT_FAILURE);
-    };
+    };*/
 
 
     // =======================================================================
