@@ -31,7 +31,23 @@ int main()
 	win.draw_fsquare(400,400,440,440,0xFF00);
     }*/
 
+	
+	// Creation of lists of Agent
+
+	Agent A1;
+	Agent A2 = Agent();
+	Agent A3 = Agent(10,12);
+	Agent A4 = Agent(10,12,5,4);
+	Boid* population1;
+	population1->AddAgent(A1);
+	population1->AddAgent(A2);
+	Boid population2 = Boid(A1);
+	population2.AddAgent(A4);
+
+
+
 	printf("Hello World !\n");
+	delete population1;
 
     return 0;
 }
