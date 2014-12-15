@@ -16,6 +16,7 @@
 // ===========================================================================
 //                                 Project Files
 // ===========================================================================
+#include <math.h>
 #include "Agent.h"
 #define dt 0.5 
 
@@ -57,6 +58,17 @@ Agent::Agent(int xi1, int xi2)
 	vi[1] = 0;
 }
 
+Agent::Agent(int xi1, int xi2, double vi1, double vi2)
+{
+	xi = new int[2];
+	xi[0] = xi1;
+	xi[1] = xi2;
+
+	vi = new double[2];
+	vi[0] = vi1;
+	vi[1] = vi2;
+}
+
 // ===========================================================================
 //                                  Destructor
 // ===========================================================================
@@ -70,19 +82,25 @@ Agent::~Agent(void)
 //                                 Public Methods
 // ===========================================================================
 // Getters
-int* Agent::getXi(void)
+int* Agent::getXi(void) const
 {
 	return xi;
 }
     
-double* Agent::getVi(void)
+double* Agent::getVi(void) const
 {
 	return vi;
 }
     
-int Agent::getR(void)
+int Agent::getR(void) const
 {
 	return RADIUS;
+}
+
+double Agent::getSpeed(void) const
+{
+	double speed = sqrt(vi[0]*vi[0]+vi[1]*vi[1]);
+	return speed;
 }
 
 
