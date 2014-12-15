@@ -47,6 +47,7 @@ class Agent
     // =======================================================================
     Agent(void);
     Agent(int xi1, int xi2);
+    Agent(int xi1, int xi2, double vi1, double vi2);
 
     // =======================================================================
     //                                Destructor
@@ -56,9 +57,11 @@ class Agent
     // =======================================================================
     //                            Accessors: getters
     // =======================================================================
-    int* getXi(void);
-    double* getVi(void);
-    int getR(void);
+    int* getXi(void) const;
+    double* getVi(void) const;
+    int getR(void) const;
+    double getSpeed(void) const;
+
     // =======================================================================
     //                            Accessors: setters
     // =======================================================================
@@ -89,11 +92,11 @@ class Agent
       printf("%s:%d: error: call to forbidden constructor.\n", __FILE__, __LINE__);
       exit(EXIT_FAILURE);
     };*/
-    Agent(const Agent &model)
+    /*Agent(const Agent &model)
     {
       printf("%s:%d: error: call to forbidden constructor.\n", __FILE__, __LINE__);
       exit(EXIT_FAILURE);
-    };
+    };*/
 
 
     // =======================================================================
