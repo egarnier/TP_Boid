@@ -69,6 +69,23 @@ Agent::~Agent(void)
 // ===========================================================================
 //                                 Public Methods
 // ===========================================================================
+// Getters
+int* Agent::getXi(void)
+{
+	return xi;
+}
+    
+double* Agent::getVi(void)
+{
+	return vi;
+}
+    
+int Agent::getR(void)
+{
+	return RADIUS;
+}
+
+
 
 // ===========================================================================
 //                                Protected Methods
