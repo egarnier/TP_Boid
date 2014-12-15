@@ -34,20 +34,25 @@ int main()
 	
 	// Creation of lists of Agent
 
+
+	printf("Hello World !\n");
+
 	Agent A1;
 	Agent A2 = Agent();
 	Agent A3 = Agent(10,12);
 	Agent A4 = Agent(10,12,5,4);
-	Boid* population1;
-	population1->AddAgent(A1);
-	population1->AddAgent(A2);
-	Boid population2 = Boid(A1);
-	population2.AddAgent(A4);
+	Boid population1 = Boid();
+	population1.AddAgent(A1);
+	population1.AddAgent(A3);
+	printf("yo je suis dans le main\n");
+	Agent A5 = population1[1];
+	int * test = A5.getXi();
+	printf("%d\n", test[0]);
+	/*Boid population2 = Boid(A3);
+	population2.AddAgent(A4);*/
 
-
-
-	printf("Hello World !\n");
-	delete population1;
+	//delete population1;
+	printf("Si j'arrive ici c'est la folie ;)\n");
 
     return 0;
 }
