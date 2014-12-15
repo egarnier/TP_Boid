@@ -40,6 +40,13 @@ Boid::Boid(void)
 	N = 0;
 }
 
+Boid::Boid(Agent firstAgent)
+{
+	N=1;
+	pop = new Agent[N];
+	pop[0] = firstAgent;
+}
+
 // ===========================================================================
 //                                  Destructor
 // ===========================================================================
@@ -68,6 +75,33 @@ const Agent& Boid::operator[] (int pos) const
 	{
 		Agent* a = '\0';
 		return a[0];
+	}
+}
+
+// Methods
+void Boid::AddAgent(Agent newAgent)
+{
+	if(pop == NULL)
+	{
+		N = 1;
+		pop = new Agent[1];
+		pop[0] = newAgent;
+	}
+	else
+	{
+		Agent* tmp = new Agent[N];
+		for(int i = 0 ; i < N ; i++)
+		{
+			tmp[i] = pop[i];
+		}
+		N += 1;
+		pop = new Agent[N];
+		for(int j = 0 ; j < N-1 ; j++)
+		{
+			pop[j] = tmp[j];
+		}
+		pop[N-1] = newAgent;
+		delete tmp;
 	}
 }
 
