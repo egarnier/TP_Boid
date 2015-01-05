@@ -46,7 +46,7 @@ class Boid
     //                               Constructors
     // =======================================================================
     Boid(void);
-    Boid(Agent firstAgent);
+    Boid(const Agent& firstAgent);
 
     // =======================================================================
     //                                Destructor
@@ -56,7 +56,9 @@ class Boid
     // =======================================================================
     //                            Accessors: getters
     // =======================================================================
-    int GetN (void);
+    int GetN (void) const;
+    Agent GetAgent(int pos) const;
+    Agent* GetPop(void) const;
 
     // =======================================================================
     //                            Accessors: setters
@@ -69,11 +71,8 @@ class Boid
     // =======================================================================
     //                              Public Methods
     // =======================================================================
-    // Operators
-    const Agent& operator[] (int pos) const;
-
-    // Method
-    void AddAgent(Agent newAgent);
+    // Methods
+    void AddAgent(const Agent& newAgent);
 
     // =======================================================================
     //                             Public Attributes

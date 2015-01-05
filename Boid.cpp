@@ -38,10 +38,9 @@ Boid::Boid(void)
 {
 	pop = NULL;
 	N = 0;
-	printf("youhou je suis dans le constructor by default !\n");
 }
 
-Boid::Boid(Agent firstAgent)
+Boid::Boid(const Agent& firstAgent)
 {
 	N=1;
 	pop = new Agent[N];
@@ -53,47 +52,52 @@ Boid::Boid(Agent firstAgent)
 // ===========================================================================
 Boid::~Boid(void)
 {
-	delete pop;
+	delete[] pop;
 }
 
 // ===========================================================================
 //                                 Public Methods
 // ===========================================================================
 // Getters
-int Boid::GetN (void)
+int Boid::GetN (void) const
 {
 	return N;
 }
 
-// Operator
-const Agent& Boid::operator[] (int pos) const
+Agent Boid::GetAgent(int pos) const
 {
-	if(pos<N)
+	Agent A;
+	if(pos>N)
 	{
-		return pop[pos];
+		printf("La valeur entrée dépasse le Boid.\n");
 	}
 	else
 	{
-		Agent* a = '\0';
-		return a[0];
+		A = pop[pos];
 	}
+	return A;
+}
+
+Agent* Boid::GetPop(void) const
+{
+	return pop;
 }
 
 // Methods
-void Boid::AddAgent(Agent newAgent)
+void Boid::AddAgent(const Agent& newAgent)
 {
-	if(pop == NULL)
+	if(N == 0)
 	{
-		printf("youhou je suis dans le AddAgent() dans le cas ou pop est nul !\n");
 		N = 1;
 		pop = new Agent[1];
 		pop[0] = newAgent;
-		printf("youhou je suis dans le AddAgent() dans le cas ou pop est nul !\n");
 	}
 	else
 	{
-		printf("youhou je suis dans le AddAgent() dans le cas ou pop est non nul !\n");
-		Agent* tmp = new Agent[N];
+		N = N + 1;
+		pop = new Agent[N];
+		pop[N-1] = newAgent;
+		/*Agent* tmp = new Agent[N];
 		for(int i = 0 ; i < N ; i++)
 		{
 			tmp[i] = pop[i];
@@ -105,9 +109,8 @@ void Boid::AddAgent(Agent newAgent)
 			pop[j] = tmp[j];
 		}
 		pop[N-1] = newAgent;
-		printf("youhou je suis dans le AddAgent() dans le cas ou pop est nul !\n");
-		delete[] tmp;
-		printf("youhou je suis dans le AddAgent() dans le cas ou pop nonest nul !\n");
+		printf("la pos de l'agent dans addelement %d - %d\n", pop[N-1].GetXi()[0], pop[N-1].GetXi()[1] );
+		delete[] tmp;*/
 	}
 }
 
