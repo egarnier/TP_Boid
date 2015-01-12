@@ -46,7 +46,6 @@ class Agent
     //                               Constructors
     // =======================================================================
     Agent(void);
-    Agent(double xi1, double xi2);
     Agent(double xi1, double xi2, double vi1, double vi2);
 
     // =======================================================================
@@ -73,8 +72,11 @@ class Agent
     //                              Public Methods
     // =======================================================================
     void updatepos(void);
+    void updateXneg(int a);
+    void updateYneg(int a);
+    void updateXpos(int a);
+    void updateYpos(int a);
     bool perception(const Agent& anAgent);
-    void speed1(Agent* tabAgent, int length, int pos);
     // =======================================================================
     //                             Public Attributes
     // =======================================================================

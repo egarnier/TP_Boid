@@ -5,7 +5,7 @@
 
 int main()
 {
-    /*bwindow win(640,480);
+	/*bwindow win(640,480);
     printf("%d\n",win.init());
     win.map();
     for(;;)
@@ -33,24 +33,21 @@ int main()
 
 	
 	// Creation list of Agent
+	srand(time(NULL));
 
-	Agent A1 = Agent(1.1, 1.2, 1.3, 1.5);
-	Agent A2 = Agent(2, 2.3, 2.4, 2);
-	Agent A3 = Agent(13, 14);
-	Agent A4 = Agent(10, 12, 5, 4);
-	Boid* population1 = new Boid();
-	population1->AddAgent(A1);
-	population1->AddAgent(A2);
-	population1->AddAgent(A3);
-	population1->AddAgent(A4);
-	printf("Nb agent pop 1 : %d\n", population1->GetN());
-	printf("la pos de l'agent 4  de pop 1 est %f - %f\n", population1->GetAgent(3).GetXi()[0], population1->GetAgent(3).GetXi()[1] );
-	A4.updatepos();
-	printf("pos update de A4 %f - %f \n",A4.GetXi()[0], A4.GetXi()[1] );
-	
-	printf("Vitesse de A1 et A2 avant speed1 :\n%f - %f\n%f - %f\n", A1.GetVi()[0], A1.GetVi()[1], A2.GetVi()[0], A2.GetVi()[1]);
-	A1.speed1(population1->GetPop(), population1->GetN(), 0);
-	printf("Vitesse de A1 et A2 après speed1 :\n%f - %f\n%f - %f\n", A1.GetVi()[0], A1.GetVi()[1], A2.GetVi()[0], A2.GetVi()[1]);
+	Boid population1;
+	printf("Nb agent pop 1 : %d\n", population1.GetN());
+	printf("\n\n");
+	printf("Les coordonnées initiales de la population1 sont :\n");
+	population1.affiche();
+	printf("\n\n");
+	printf("Les coordonnées après update :\n");
+	population1.updatepos();
+	population1.affiche();
+	printf("\n\n");
+	population1.speed(0);
+	printf("Les coordonnées après speed1 sont :\n");
+	population1.affiche();
 	
     return 0;
 }

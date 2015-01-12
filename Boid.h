@@ -46,7 +46,6 @@ class Boid
     //                               Constructors
     // =======================================================================
     Boid(void);
-    Boid(const Agent& firstAgent);
 
     // =======================================================================
     //                                Destructor
@@ -72,7 +71,12 @@ class Boid
     //                              Public Methods
     // =======================================================================
     // Methods
-    void AddAgent(const Agent& newAgent);
+    void updatepos(void);
+    void affiche(void);
+    double* speed1(int pos);
+    double* speed2(int pos);
+    double* speed3(int pos);
+    void speed(int pos);
 
     // =======================================================================
     //                             Public Attributes
