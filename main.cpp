@@ -35,19 +35,24 @@ int main()
 	// Creation of lists of Agent
 
 
-	printf("Hello World !\n");
-
+	printf("A1 !\n");
 	Agent A1;
+		printf("A2 !\n");
 	Agent A2 = Agent();
+		printf("A3 !\n");
 	Agent A3 = Agent(10,12);
+		printf("A4 !\n");
 	Agent A4 = Agent(10,12,5,4);
-	Boid population1 = Boid();
-	population1.AddAgent(A1);
+	int a = A4.getXi()[0];
+	printf("%d\n",a);
+	Boid population1 = Boid(A1);
+	population1.AddAgent(A4);
 	population1.AddAgent(A3);
+	printf("nb de pop : %d\n",population1.getN());
 	printf("yo je suis dans le main\n");
-	Agent A5 = population1[1];
-	int * test = A5.getXi();
-	printf("%d\n", test[0]);
+	printf("coucou\n");
+	int test2 = (population1[1]).getXi()[0];
+	printf("%d\n", test2);
 	/*Boid population2 = Boid(A3);
 	population2.AddAgent(A4);*/
 

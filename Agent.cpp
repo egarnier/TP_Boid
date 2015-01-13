@@ -69,6 +69,20 @@ Agent::Agent(int xi1, int xi2, double vi1, double vi2)
 	vi[1] = vi2;
 }
 
+/*Agent::Agent(const Agent& agt)
+{
+	printf("celui que je copie %d\n",(agt.getXi())[0]);
+	xi = new int[2];
+	xi[0] = agt.getXi()[0];
+	xi[1] = agt.getXi()[1];
+	
+	vi = new double[2];
+	vi[0] = agt.getVi()[0];
+	vi[1] = agt.getVi()[1];
+	printf("dans le constr by copy %d\n",xi[0]);
+}
+*/
+
 // ===========================================================================
 //                                  Destructor
 // ===========================================================================

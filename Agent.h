@@ -48,6 +48,7 @@ class Agent
     Agent(void);
     Agent(int xi1, int xi2);
     Agent(int xi1, int xi2, double vi1, double vi2);
+    //Agent(const Agent& agt);
 
     // =======================================================================
     //                                Destructor

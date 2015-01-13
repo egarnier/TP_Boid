@@ -56,7 +56,9 @@ class Boid
     // =======================================================================
     //                            Accessors: getters
     // =======================================================================
-    int GetN (void);
+    int getN(void) const;
+    Agent* getPop(void) const;
+    const Agent& getAgent(int pos) const;
 
     // =======================================================================
     //                            Accessors: setters
