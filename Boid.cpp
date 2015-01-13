@@ -10,16 +10,18 @@
 // ===========================================================================
 //                                   Libraries
 // ===========================================================================
-
+#include <math.h>
 
 
 // ===========================================================================
 //                                 Project Files
 // ===========================================================================
 #include "Boid.h"
-
-
-
+#define c 10
+#define gamma1 0.1
+#define gamma2 0.2
+#define gamma3 0.1
+#define dt 1
 
 //############################################################################
 //                                                                           #
@@ -36,16 +38,8 @@
 // ===========================================================================
 Boid::Boid(void)
 {
-	pop = NULL;
-	N = 0;
-	printf("youhou je suis dans le constructor by default !\n");
-}
-
-Boid::Boid(Agent firstAgent)
-{
-	N = 1;
+	N = 10;
 	pop = new Agent[N];
-	pop[0] = firstAgent;
 }
 
 // ===========================================================================
@@ -53,80 +47,161 @@ Boid::Boid(Agent firstAgent)
 // ===========================================================================
 Boid::~Boid(void)
 {
-	delete pop;
+	delete[] pop;
 }
 
 // ===========================================================================
 //                                 Public Methods
 // ===========================================================================
 // Getters
-int Boid::getN(void) const
+int Boid::GetN (void) const
 {
 	return N;
 }
 
-Agent* Boid::getPop(void) const
+Agent Boid::GetAgent(int pos) const
+{
+	if(pos>N)
+	{
+		printf("La valeur entrée dépasse le Boid.\n");
+	}
+	return pop[pos];
+}
+
+Agent* Boid::GetPop(void) const
 {
 	return pop;
 }
 
-const Agent& Boid::getAgent(int pos) const
-{
-	return pop[pos];
-}
 
-// Operator
-const Agent& Boid::operator[] (int pos) const
-{
-	if(pos<N)
-	{
-		Agent agt;
-		agt = pop[pos];
-		return agt;
-	}
-	else
-	{
-		Agent* a = '\0';
-		return a[0];
-		delete a;
-	}
-}
+
 
 // Methods
-void Boid::AddAgent(Agent newAgent)
+void Boid::updatepos(void)
 {
-	if(pop == NULL)
+	for(int i=0;i<N;i++)
 	{
-		//printf("youhou je suis dans le AddAgent() dans le cas ou pop est nul !\n");
-		N = 1;
-		pop = new Agent[1];
-		pop[0] = newAgent;
-		//printf("youhou je suis dans le AddAgent() dans le cas ou pop est nul !\n");
-	}
-	else
-	{
-		//printf("youhou je suis dans le AddAgent() dans le cas ou pop est non nul !\n");
-		Agent* tmp = new Agent[N];
-		for(int i = 0 ; i < N ; i++)
-		{
-			tmp[i] = pop[i];
-			//printf("%d\n", tmp[i].getXi()[0]);
-		}
-		N = N + 1;
-		pop = new Agent[N];
-		for(int j = 0 ; j < N-1 ; j++)
-		{
-			pop[j] = tmp[j];
-			//printf("%d\n", pop[j].getXi()[0]);
-		}
-		pop[N] = newAgent;
-		//printf("%d\n", pop[N-1].getXi()[0]);
-		//printf("youhou je suis dans le AddAgent() dans le cas ou pop est nul !\n");
-		//printf("%d\n", pop[N-1].getXi()[0]);
-		//printf("youhou je suis dans le AddAgent() dans le cas ou pop nonest nul !\n");
+		pop[i].updatepos();
 	}
 }
 
+void Boid::affiche(void)
+{
+	for(int i=0;i<N;i++)
+	{
+		printf("La position de l'agent %d est %f ; %f \n",i,pop[i].GetXi()[0],pop[i].GetXi()[1]);
+		printf("La  vitesse de l'agent %d est %f ; %f \n",i,pop[i].GetVi()[0],pop[i].GetVi()[1]);
+	}
+}
+
+double* Boid::speed1(int pos)
+{
+int K = 0;
+bool val;
+
+double* vim = new double[2];
+vim[0] = 0;
+vim[1] = 0;
+
+for(int i = 0; i<N; i++)
+{
+	val = pop[pos].perception(pop[i]);
+
+	if(val == true && i != pos)
+	{
+		K = K +1;
+		vim[0] = vim[0] + pop[i].GetVi()[0] - pop[pos].GetVi()[0];
+		vim[1] = vim[1] + pop[i].GetVi()[1] - pop[pos].GetVi()[1];
+	}
+	
+}
+if(K != 0)
+{
+	vim[0] = vim[0]/K;
+	vim[1] = vim[1]/K;
+	pop[pos].SetVi(vim);
+}
+
+return vim;
+
+delete vim;
+}
+
+
+double* Boid::speed2(int pos)
+{
+int K = 0;
+bool val;
+
+double* vim = new double[2];
+vim[0] = 0;
+vim[1] = 0;
+
+for(int i = 0; i<N; i++)
+{
+	val = pop[pos].perception(pop[i]);
+
+	if(val == true && i != pos)
+	{
+		K = K +1;
+		vim[0] = vim[0] + pop[i].GetXi()[0] - pop[pos].GetXi()[0];
+		vim[1] = vim[1] + pop[i].GetXi()[1] - pop[pos].GetXi()[1];
+	}
+	
+}
+if(K != 0)
+{
+	vim[0] = vim[0]/K;
+	vim[1] = vim[1]/K;
+	pop[pos].SetVi(vim);
+}
+return vim;
+
+delete vim;
+}
+
+double* Boid::speed3(int pos)
+{
+int K = 0;
+int dis = 0;
+bool val;
+double* vim = new double[2];
+vim[0] = 0;
+vim[1] = 0;
+
+for(int i = 0; i<N; i++)
+{
+	val = pop[pos].perception(pop[i]);
+	dis = sqrt((pop[i].GetXi()[0] - pop[pos].GetXi()[0])*(pop[i].GetXi()[0] - pop[pos].GetXi()[0]) + (pop[i].GetXi()[1] - pop[pos].GetXi()[1])*(pop[i].GetXi()[1] - pop[pos].GetXi()[1]));
+
+	if(val == true && i != pos && dis<c)
+	{
+		K = K +1;
+		vim[0] = vim[0] + pop[i].GetXi()[0] - pop[pos].GetXi()[0];
+		vim[1] = vim[1] + pop[i].GetXi()[1] - pop[pos].GetXi()[1];
+	}
+	
+}
+if(K != 0)
+{
+	vim[0] = -vim[0]/K;
+	vim[1] = -vim[1]/K;
+	pop[pos].SetVi(vim);
+}
+return vim;
+
+delete vim;
+}
+
+void Boid::speed(int pos)
+{
+	double* v1 = this->speed1(pos);
+	double* v2 = this->speed2(pos);
+	double* v3 = this->speed3(pos);
+	pop[pos].GetVi()[0] = pop[pos].GetVi()[0] + dt*(gamma1*v1[0] + gamma2*v2[0] + gamma3*v3[0]);
+	pop[pos].GetVi()[1] = pop[pos].GetVi()[1] + dt*(gamma1*v1[1] + gamma2*v2[1] + gamma3*v3[1]);
+	this->updatepos();
+}
 // ===========================================================================
 //                                Protected Methods
 // ==========================================Adedd=================================

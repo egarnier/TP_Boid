@@ -46,9 +46,7 @@ class Agent
     //                               Constructors
     // =======================================================================
     Agent(void);
-    Agent(int xi1, int xi2);
-    Agent(int xi1, int xi2, double vi1, double vi2);
-    //Agent(const Agent& agt);
+    Agent(double xi1, double xi2, double vi1, double vi2);
 
     // =======================================================================
     //                                Destructor
@@ -58,15 +56,14 @@ class Agent
     // =======================================================================
     //                            Accessors: getters
     // =======================================================================
-    int* getXi(void) const;
-    double* getVi(void) const;
-    int getR(void) const;
-    double getSpeed(void) const;
+    double* GetXi(void) const;
+    double* GetVi(void) const;
+    int GetR(void) const;
 
     // =======================================================================
     //                            Accessors: setters
     // =======================================================================
-
+    void SetVi(double* vitesse);
     // =======================================================================
     //                                Operators
     // =======================================================================
@@ -74,7 +71,12 @@ class Agent
     // =======================================================================
     //                              Public Methods
     // =======================================================================
-
+    void updatepos(void);
+    void updateXneg(int a);
+    void updateYneg(int a);
+    void updateXpos(int a);
+    void updateYpos(int a);
+    bool perception(const Agent& anAgent);
     // =======================================================================
     //                             Public Attributes
     // =======================================================================
@@ -107,7 +109,7 @@ class Agent
     // =======================================================================
     //                             Protected Attributes
     // =======================================================================
-int* xi; // position of the agent
+double* xi; // position of the agent
 double* vi; // speed of the agent
 static int RADIUS; // radius of perception of the agent
 };
@@ -130,5 +132,5 @@ static int RADIUS; // radius of perception of the agent
 // ===========================================================================
 
 
-#endif // __AGENTs_H__
+#endif // __AGENT_H__
 

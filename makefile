@@ -1,5 +1,5 @@
 test.out: main.o bwindow.o Boid.o Agent.o
-	g++ -g -o test.out main.o bwindow.o Boid.o Agent.o -lX11 -L/usr/X11R6/lib
+	g++ -Wall -o test.out main.o bwindow.o Boid.o Agent.o -lX11 -L/usr/X11R6/lib
 
 main.o: main.cpp
 	g++ -g -c main.cpp 

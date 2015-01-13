@@ -5,7 +5,7 @@
 
 int main()
 {
-    /*bwindow win(640,480);
+	/*bwindow win(640,480);
     printf("%d\n",win.init());
     win.map();
     for(;;)
@@ -32,32 +32,23 @@ int main()
     }*/
 
 	
-	// Creation of lists of Agent
 
+	// Creation list of Agent
+	srand(time(NULL));
 
-	printf("A1 !\n");
-	Agent A1;
-		printf("A2 !\n");
-	Agent A2 = Agent();
-		printf("A3 !\n");
-	Agent A3 = Agent(10,12);
-		printf("A4 !\n");
-	Agent A4 = Agent(10,12,5,4);
-	int a = A4.getXi()[0];
-	printf("%d\n",a);
-	Boid population1 = Boid(A1);
-	population1.AddAgent(A4);
-	population1.AddAgent(A3);
-	printf("nb de pop : %d\n",population1.getN());
-	printf("yo je suis dans le main\n");
-	printf("coucou\n");
-	int test2 = (population1[1]).getXi()[0];
-	printf("%d\n", test2);
-	/*Boid population2 = Boid(A3);
-	population2.AddAgent(A4);*/
-
-	//delete population1;
-	printf("Si j'arrive ici c'est la folie ;)\n");
-
+	Boid population1;
+	printf("Nb agent pop 1 : %d\n", population1.GetN());
+	printf("\n\n");
+	printf("Les coordonnées initiales de la population1 sont :\n");
+	population1.affiche();
+	printf("\n\n");
+	printf("Les coordonnées après update :\n");
+	population1.updatepos();
+	population1.affiche();
+	printf("\n\n");
+	population1.speed(0);
+	printf("Les coordonnées après speed1 sont :\n");
+	population1.affiche();
+	
     return 0;
 }
