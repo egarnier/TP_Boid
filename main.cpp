@@ -5,7 +5,7 @@
 
 int main()
 {
-	/*bwindow win(640,480);
+	bwindow win(640,480);
     printf("%d\n",win.init());
     win.map();
     for(;;)
@@ -24,16 +24,27 @@ int main()
 	    case BCONFIGURE:
 		printf("configure\n"); break;
 	}
-	win.draw_point(100,100,0xFF00);
-	win.draw_line(100,100,200,200,0xFF0000);
+	/*win.draw_line(100,100,200,200,0xFF0000);
 	win.draw_text(10,10,0x0,"Hello World",strlen("Hello World"));
 	win.draw_square(200,200,220,220,0xFF00);
-	win.draw_fsquare(400,400,440,440,0xFF00);
-    }*/
+	win.draw_fsquare(400,400,440,440,0xFF00);*/
 
+	srand(time(NULL));
+	Boid population1;
+	int x,y;
+	for(int i=0;i<population1.GetN();i++)
+	{
+		x0 = population1.GetAgent(i).GetXi();
+		x1 = x0+10;
+		win.draw_square(x0,y0,x1,y1,0xFF00);
+	}
+	population1.speed(0);
+	population1.updatepos();
+
+    }
 	
 
-	// Creation list of Agent
+	/*// Creation list of Agent
 	srand(time(NULL));
 
 	Boid population1;
@@ -49,6 +60,6 @@ int main()
 	population1.speed(0);
 	printf("Les coordonnées après speed1 sont :\n");
 	population1.affiche();
-	
+	*/
     return 0;
 }
