@@ -24,7 +24,6 @@
 
 
 
-
 // ===========================================================================
 //                              Class declarations
 // ===========================================================================
@@ -46,7 +45,7 @@ class Agent
     //                               Constructors
     // =======================================================================
     Agent(void);
-    Agent(double xi1, double xi2, double vi1, double vi2);
+    Agent(const Agent &model);
 
     // =======================================================================
     //                                Destructor
@@ -71,12 +70,16 @@ class Agent
     // =======================================================================
     //                              Public Methods
     // =======================================================================
-    void updatepos(void);
+    void updatepos(int pos, int length, Agent* pop);
     void updateXneg(int a);
     void updateYneg(int a);
     void updateXpos(int a);
     void updateYpos(int a);
     bool perception(const Agent& anAgent);
+    double* speed1(int pos, int length, Agent* pop);
+    double* speed2(int pos, int length, Agent* pop);
+    double* speed3(int pos, int length, Agent* pop);
+    void speed(int pos, int length, Agent* pop);
     // =======================================================================
     //                             Public Attributes
     // =======================================================================
@@ -111,7 +114,6 @@ class Agent
     // =======================================================================
 double* xi; // position of the agent
 double* vi; // speed of the agent
-static int RADIUS; // radius of perception of the agent
 };
 
 

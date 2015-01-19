@@ -22,6 +22,8 @@
 //                                Project Files
 // ===========================================================================
 #include "Agent.h"
+#include "Obstacle.h"
+
 
 
 
@@ -46,6 +48,7 @@ class Boid
     //                               Constructors
     // =======================================================================
     Boid(void);
+    Boid(const Boid &model);
 
     // =======================================================================
     //                                Destructor
@@ -58,7 +61,8 @@ class Boid
     int GetN (void) const;
     Agent GetAgent(int pos) const;
     Agent* GetPop(void) const;
-
+    int GetNo(void) const;
+    Obstacle GetObstacle(int pos) const;
 
     // =======================================================================
     //                            Accessors: setters
@@ -71,18 +75,14 @@ class Boid
     // =======================================================================
     //                              Public Methods
     // =======================================================================
-    void updatepos(void);
+    void updateposBoid(void);
     void affiche(void);
-    double* speed1(int pos);
-    double* speed2(int pos);
-    double* speed3(int pos);
     void speed(int pos);
 
     // =======================================================================
     //                             Public Attributes
     // =======================================================================
-    Agent* pop; // Population of agents
-    int N; // Number of agents in the population
+
 
 
 
@@ -111,6 +111,10 @@ class Boid
     // =======================================================================
     //                             Protected Attributes
     // =======================================================================
+    Agent* pop; // Population of agents
+    int N; // Length of population
+    int No; // Number of Obstacle
+    Obstacle* obs; // Obstacle 
 };
 
 

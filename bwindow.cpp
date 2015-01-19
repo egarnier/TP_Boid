@@ -201,6 +201,26 @@ void bwindow::draw_fsquare(int x1,int y1,int x2,int y2,unsigned int color)
  XFillRectangle(display, win, gc, x1, y1, x2-x1, y2-y1);
  XSetForeground(display, gc,0x0);
 }
+
+void bwindow::draw_boid(Boid* population)
+{
+    int x,y,x1,y1;
+    for(int i=0; i<population->GetN(); i++)
+    {
+        x = (int)((population->GetAgent(i)).GetXi()[0]);
+        y = (int)((population->GetAgent(i)).GetXi()[1]);
+        //printf("%d %d \n", x,y);
+        draw_fsquare(x,y,x+5,y+5,0x808080);
+        //population.updateposBoid();
+    }
+    for(int j = 0; j<population->GetNo(); j++)
+    {
+        x1 = (int)((population->GetObstacle(j)).GetXo()[0]);
+        y1 = (int)((population->GetObstacle(j)).GetXo()[1]);
+        draw_fsquare(x1,y1,x1+10,y1+10,0x008000);
+    }
+}
+
 char * bwindow::get_lastkey()
 {
     return lastkey;

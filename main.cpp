@@ -7,6 +7,10 @@ int main()
 {
 	bwindow win(640,480);
     printf("%d\n",win.init());
+
+	srand(time(NULL));
+	Boid population1 = Boid();
+	population1.affiche();
     win.map();
     for(;;)
     {
@@ -24,23 +28,18 @@ int main()
 	    case BCONFIGURE:
 		printf("configure\n"); break;
 	}
+
+	win.draw_fsquare(0,0,640,480,0xFFFFFF);
+	win.draw_boid(&population1);
+
+	population1.updateposBoid();
+
 	/*win.draw_line(100,100,200,200,0xFF0000);
 	win.draw_text(10,10,0x0,"Hello World",strlen("Hello World"));
 	win.draw_square(200,200,220,220,0xFF00);
 	win.draw_fsquare(400,400,440,440,0xFF00);*/
 
-	srand(time(NULL));
-	Boid population1;
-	int x,y;
-	for(int i=0;i<population1.GetN();i++)
-	{
-		x0 = population1.GetAgent(i).GetXi();
-		x1 = x0+10;
-		win.draw_square(x0,y0,x1,y1,0xFF00);
-	}
-	population1.speed(0);
-	population1.updatepos();
-
+	
     }
 	
 
@@ -55,11 +54,7 @@ int main()
 	printf("\n\n");
 	printf("Les coordonnées après update :\n");
 	population1.updatepos();
-	population1.affiche();
-	printf("\n\n");
-	population1.speed(0);
-	printf("Les coordonnées après speed1 sont :\n");
-	population1.affiche();
-	*/
+	population1.affiche();*/
+	
     return 0;
 }
