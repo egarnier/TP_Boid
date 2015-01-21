@@ -104,7 +104,7 @@ void Boid::updateposBoid(void)
 {
 	for(int i=0;i<N;i++)
 	{
-		pop[i].updatepos(i, N, pop);
+		pop[i].updatepos(i, N, No, pop, obs);
 	}
 }
 

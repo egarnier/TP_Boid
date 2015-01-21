@@ -21,7 +21,7 @@
 // ===========================================================================
 //                                Project Files
 // ===========================================================================
-
+#include "Obstacle.h"
 
 
 // ===========================================================================
@@ -70,16 +70,16 @@ class Agent
     // =======================================================================
     //                              Public Methods
     // =======================================================================
-    void updatepos(int pos, int length, Agent* pop);
+    void updatepos(int pos, int length, int length_obs, Agent* pop, Obstacle* obs);
     void updateXneg(int a);
     void updateYneg(int a);
     void updateXpos(int a);
     void updateYpos(int a);
     bool perception(const Agent& anAgent);
-    double* speed1(int pos, int length, Agent* pop);
-    double* speed2(int pos, int length, Agent* pop);
-    double* speed3(int pos, int length, Agent* pop);
-    void speed(int pos, int length, Agent* pop);
+    double* speed1(int pos, int length_pop, Agent* pop);
+    double* speed2(int pos, int length_pop, Agent* pop);
+    double* speed3(int pos, int length_pop, int length_obs, Agent* pop, Obstacle* obs);
+    void speed(int pos, int length_pop, int length_obs, Agent* pop, Obstacle* obs);
     // =======================================================================
     //                             Public Attributes
     // =======================================================================

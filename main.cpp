@@ -5,10 +5,12 @@
 
 int main()
 {
+
+	srand(time(NULL));
+
 	bwindow win(640,480);
     printf("%d\n",win.init());
 
-	srand(time(NULL));
 	Boid population1 = Boid();
 	population1.affiche();
     win.map();
@@ -32,7 +34,8 @@ int main()
 	win.draw_fsquare(0,0,640,480,0xFFFFFF);
 	win.draw_boid(&population1);
 
-	population1.updateposBoid();
+	
+
 
 	/*win.draw_line(100,100,200,200,0xFF0000);
 	win.draw_text(10,10,0x0,"Hello World",strlen("Hello World"));

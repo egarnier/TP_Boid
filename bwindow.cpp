@@ -204,7 +204,8 @@ void bwindow::draw_fsquare(int x1,int y1,int x2,int y2,unsigned int color)
 
 void bwindow::draw_boid(Boid* population)
 {
-    int x,y,x1,y1;
+    int x=0,y=0;
+    
     for(int i=0; i<population->GetN(); i++)
     {
         x = (int)((population->GetAgent(i)).GetXi()[0]);
@@ -213,11 +214,14 @@ void bwindow::draw_boid(Boid* population)
         draw_fsquare(x,y,x+5,y+5,0x808080);
         //population.updateposBoid();
     }
-    for(int j = 0; j<population->GetNo(); j++)
+    int x1=0,y1=0;
+    population->updateposBoid();
+      for(int j = 0; j<population->GetNo(); j++)
     {
-        x1 = (int)((population->GetObstacle(j)).GetXo()[0]);
-        y1 = (int)((population->GetObstacle(j)).GetXo()[1]);
+        x1 = (population->GetObstacle(j)).GetXo()[0];
+        y1 = (population->GetObstacle(j)).GetXo()[1];
         draw_fsquare(x1,y1,x1+10,y1+10,0x008000);
+       // printf("%f - %f \n", x1, y1);
     }
 }
 
