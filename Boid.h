@@ -23,7 +23,7 @@
 // ===========================================================================
 #include "Agent.h"
 #include "Obstacle.h"
-
+#include "Predateur.h"
 
 
 
@@ -59,10 +59,12 @@ class Boid
     //                            Accessors: getters
     // =======================================================================
     int GetN (void) const;
-    Agent GetAgent(int pos) const;
-    Agent* GetPop(void) const;
     int GetNo(void) const;
+    int GetNp(void) const;
+    Agent GetAgent(int pos) const;
     Obstacle GetObstacle(int pos) const;
+    Predateur GetPredateur(int pos) const;
+    Agent* GetPop(void) const;
 
     // =======================================================================
     //                            Accessors: setters
@@ -115,6 +117,8 @@ class Boid
     int N; // Length of population
     int No; // Number of Obstacle
     Obstacle* obs; // Obstacle 
+    int Np; // Number of predator
+    Predateur* pred; // Population predateur
 };
 
 

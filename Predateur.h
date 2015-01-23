@@ -6,8 +6,8 @@
 
 
 
-#ifndef __AGENT_H__
-#define __AGENT_H__
+#ifndef __PREDATEUR_H__
+#define __PREDATEUR_H__
 
 
 // ===========================================================================
@@ -21,8 +21,9 @@
 // ===========================================================================
 //                                Project Files
 // ===========================================================================
-#include "Obstacle.h"
-//#include "Predateur.h"
+#include "Agent.h"
+
+
 
 // ===========================================================================
 //                              Class declarations
@@ -33,7 +34,7 @@
 
 
 
-class Agent
+class Predateur : public Agent
 {
   public :
     
@@ -44,25 +45,23 @@ class Agent
     // =======================================================================
     //                               Constructors
     // =======================================================================
-    Agent(void);
-    Agent(const Agent &model);
+    Predateur(void);
+    Predateur(const Predateur &model);
 
     // =======================================================================
     //                                Destructor
     // =======================================================================
-    virtual ~Agent(void);
+    virtual ~Predateur(void);
 
     // =======================================================================
     //                            Accessors: getters
     // =======================================================================
-    double* GetXi(void) const;
-    double* GetVi(void) const;
-    int GetR(void) const;
+  
 
     // =======================================================================
     //                            Accessors: setters
     // =======================================================================
-    void SetVi(double* vitesse);
+
     // =======================================================================
     //                                Operators
     // =======================================================================
@@ -70,18 +69,7 @@ class Agent
     // =======================================================================
     //                              Public Methods
     // =======================================================================
-    void updatepos(int pos, int length, int length_obs, int length_pred, Agent* pop, Obstacle* obs, Agent* pred);
-
-    bool perceptionR(const Agent& anAgent);
-    bool perceptionC(const Agent& anAgent);
-
-    void maxspeed(void);
-
-    double* speed1(int pos, int length_pop, Agent* pop);
-    double* speed2(int pos, int length_pop, Agent* pop);
-    double* speed3(int pos, int length_pop, int length_obs, Agent* pop, Obstacle* obs);
-    double* speed4(int pos, int length_pred, Agent* pop, Agent* pred);
-    void speed(int pos, int length_pop, int length_obs, int length_pred, Agent* pop, Obstacle* obs, Agent* pred);
+    void speedpred(int length_pop, Agent* pop);
 
     // =======================================================================
     //                             Public Attributes
@@ -96,17 +84,17 @@ class Agent
     // =======================================================================
     //                            Forbidden Constructors
     // =======================================================================
-    /*Agent(void)
+    /*Template_class(void)
     {
       printf("%s:%d: error: call to forbidden constructor.\n", __FILE__, __LINE__);
       exit(EXIT_FAILURE);
     };*/
-    /*Agent(const Agent &model)
+   /* Predateur(const Predateur &model)
     {
       printf("%s:%d: error: call to forbidden constructor.\n", __FILE__, __LINE__);
       exit(EXIT_FAILURE);
-    };*/
-
+    };
+*/
 
     // =======================================================================
     //                              Protected Methods
@@ -115,8 +103,8 @@ class Agent
     // =======================================================================
     //                             Protected Attributes
     // =======================================================================
-double* xi; // position of the agent
-double* vi; // speed of the agent
+int temps_stop;
+
 };
 
 
@@ -137,5 +125,5 @@ double* vi; // speed of the agent
 // ===========================================================================
 
 
-#endif // __AGENT_H__
+#endif // __PREDATEUR_H__
 

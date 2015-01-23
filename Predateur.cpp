@@ -10,14 +10,18 @@
 // ===========================================================================
 //                                   Libraries
 // ===========================================================================
+#include <stdlib.h>  
+#include <time.h> 
 #include <math.h>
 
 
 // ===========================================================================
 //                                 Project Files
 // ===========================================================================
-#include "Boid.h"
+#include "Predateur.h"
 #include "params.h"
+
+
 
 
 //############################################################################
@@ -33,127 +37,99 @@
 // ===========================================================================
 //                                  Constructors
 // ===========================================================================
-Boid::Boid(void)
+Predateur::Predateur(void)
 {
-	N = nb;
-	pop = new Agent[N];
-	No = nbo;
-	obs = new Obstacle[No];
-	Np = nbp;
-	pred = new Predateur[Np];
+	xi = new double[2];
+	xi[0] = rand()%640;
+	xi[1] = rand()%480;
+
+	vi = new double[2];
+	vi[0] = rand()%20;
+	vi[1] = rand()%20;
+
+	temps_stop = 0;
 }
 
-
-Boid::Boid(const Boid &model)
+Predateur::Predateur(const Predateur &model)
 {
-	N = model.GetN();
-	pop = new Agent[N];
-	for(int i=0 ; i<N ; i++)
-	{
-		pop[i] = Agent(model.GetAgent(i));
-	}
-	No = model.GetNo();
-	obs = new Obstacle[No];
-	for(int j=0 ; j < No ; j++)
-	{
-		obs[j] = Obstacle(model.GetObstacle(j));
-	}
-	Np = model.GetNp();
-	pred = new Predateur[Np];
-	for(int k=0 ; k < Np ; k++)
-	{
-		pred[k] = Predateur(model.GetPredateur(k));
-	}
+	xi = new double[2];
+	xi[0] = model.GetXi()[0];
+	xi[1] = model.GetXi()[1];
+
+	vi = new double[2];
+	vi[0] = model.GetVi()[0];
+	vi[1] = model.GetVi()[1];
+
+	temps_stop = 0;
 }
 
 // ===========================================================================
 //                                  Destructor
 // ===========================================================================
-Boid::~Boid(void)
+Predateur::~Predateur(void)
 {
-	delete[] pop;
-	pop = NULL;
+	delete[] xi;
+	xi = NULL;
+	delete[] vi;
+	vi=NULL;
 }
 
 // ===========================================================================
 //                                 Public Methods
 // ===========================================================================
-// Getters
-int Boid::GetN (void) const
-{
-	return N;
-}
+void Predateur::speedpred(int length_pop, Agent* pop){
 
-int Boid::GetNo(void) const
-{
-	return No;
-}
+	double norm = Rp;
+	double dis = 0;
+	double* proie = new double[2];
+	proie[0] = 0;
+	proie[1] = 0;
 
-int Boid::GetNp(void) const
-{
-	return Np;
-}
-
-Agent Boid::GetAgent(int pos) const
-{
-	if(pos>N)
+	for(int i=0; i<length_pop; i++)
 	{
-		printf("La valeur entrée dépasse le nombre d'agents possible.\n");
+		dis = sqrt((pop[i].GetXi()[0] - xi[0])*(pop[i].GetXi()[0] - xi[0]) + (pop[i].GetXi()[1] - xi[1])*(pop[i].GetXi()[1] - xi[1]));
+
+		if(dis < norm)
+		{
+			norm = dis;
+			proie[0] = pop[i].GetXi()[0];
+			proie[1] = pop[i].GetXi()[1];		
+		}
 	}
-	return pop[pos];
-}
 
 
-Obstacle Boid::GetObstacle(int pos) const
-{
-	if(pos>No)
+	if(norm != Rp)
 	{
-		printf("La valeur entrée dépasse le nombre d'obstacle possible.\n");
+		vi[0] = proie[0] - xi[0];
+		vi[1] = proie[1] - xi[1];
 	}
-	return obs[pos];
-}
-
-Predateur Boid::GetPredateur(int pos) const
-{
-	if(pos>Np)
+	else
 	{
-		printf("La valeur entrée dépasse le nombre de prédateurs possible.\n");
+		vi[0] = rand()%20;
+		vi[1] = rand()%20; 
 	}
-	return pred[pos];
-}
-
-
-Agent* Boid::GetPop(void) const
-{
-	return pop;
-}
-
-
-
-// Methods
-void Boid::updateposBoid(void)
-{
-	for(int i=0;i<N;i++)
+	
+	double norm2 = sqrt(vi[0]*vi[0] + vi[1]*vi[1]);
+	if(norm2 > Vpmax)
 	{
-		pop[i].updatepos(i, N, No, Np, pop, obs, pred);
+		vi[0] = (vi[0]*Vpmax)/norm2;
+		vi[1] = (vi[1]*Vpmax)/norm2;
 	}
-	for(int j = 0 ; j < Np ; j++)
-	{
-		pred[j].speedpred(N, pop);
-	}
+
+	xi[0] = xi[0] + dt2*vi[0];
+	xi[1] = xi[1] + dt2*vi[1];
+
+	printf("%f %f\n",vi[0],vi[1]);
+
+	delete[] proie;	
+	proie = NULL;
 }
 
-void Boid::affiche(void)
-{
-	for(int i=0;i<N;i++)
-	{
-		printf("La position de l'agent %d est %f ; %f \n",i,pop[i].GetXi()[0],pop[i].GetXi()[1]);
-		printf("La  vitesse de l'agent %d est %f ; %f \n",i,pop[i].GetVi()[0],pop[i].GetVi()[1]);
-	}
-}
+
+
 // ===========================================================================
 //                                Protected Methods
-// ==========================================Adedd=================================
+// ===========================================================================
 
 // ===========================================================================
 //                               Non inline accessors

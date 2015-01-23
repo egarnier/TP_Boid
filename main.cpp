@@ -33,7 +33,7 @@ int main()
 
 	win.draw_fsquare(0,0,640,480,0xFFFFFF);
 	win.draw_boid(&population1);
-
+	//population1.affiche();
 	
 
 

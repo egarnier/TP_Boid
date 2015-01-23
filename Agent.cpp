@@ -96,78 +96,72 @@ void Agent::SetVi(double* vitesse)
 }
 
 // Methods
-void Agent::updatepos(int pos, int length_pop, int length_obs, Agent* pop, Obstacle* obs)
+void Agent::updatepos(int pos, int length_pop, int length_obs, int length_pred, Agent* pop, Obstacle* obs, Agent* pred)
 {
-	speed(pos, length_pop, length_obs, pop, obs);
+	speed(pos, length_pop, length_obs, length_pred, pop, obs, pred);
 	double posx = xi[0] + dt*vi[0];
-	double posy = xi[1]+dt*vi[1];
+	double posy = xi[1] + dt*vi[1];
 	int a;
 
-	if( posx < 640 && posx > 0)
-	{
-		xi[0] = posx;
-	}
-	else if(posx >= 640)
-	{
-		a = posx - 640;
-		xi[0] = 640;
-		updateXneg(a);
-	}
-	else
-	{
-		a = -posx;
-		xi[0] = a;
-		updateXpos(a);
-	}
+	int h = 20;
+	int v = 20;
 
-	if(posy < 480 && posy>0)
+	xi[0] = xi[0] + dt*vi[0];
+	xi[1] = xi[1] + dt*vi[1];
+
+	if(posx < v)
 	{
-		xi[1] = posy;
+		vi[0] = vi[0] + 10;
 	}
-	else if(posy >= 480)
+	if(posx > 640 - v)
 	{
-		a = posy - 480;
-		xi[1] = 480;
-		updateYneg(a);
+		vi[0] = vi[0] - 10;
 	}
-	else
+	if(posy < h)
 	{
-		a = -posy;
-		xi[1] = a;
-		updateYpos(a);
+		vi[1] = vi[1] + 10;
 	}
+	if(posy > 480 - h)
+	{
+		vi[1] = vi[1] - 10;
+	}
+	maxspeed();
 }
 
-void Agent::updateXneg(int a)
+void Agent::maxspeed(void)
 {
-	xi[0] = 640-a;
-	vi[0] = -vi[0];
+	double norm;
+	norm = sqrt(vi[0]*vi[0] + vi[1]*vi[1]);
+	if(norm > Vmax)
+	{
+		vi[0] = (vi[0]*Vmax)/norm;
+		vi[1] = (vi[1]*Vmax)/norm;
+	}
 }
 
-void Agent::updateYneg(int a)
-{
-	xi[1] = 480-a;
-	vi[1] = -vi[1];
-}
-
-void Agent::updateXpos(int a)
-{
-	xi[0] = a;
-	vi[0] = -vi[0];
-}
-
-void Agent::updateYpos(int a)
-{
-	xi[1] = a;
-	vi[1] = -vi[1];
-}
-
-bool Agent::perception(const Agent& anAgent)
+bool Agent::perceptionR(const Agent& anAgent)
 {
 	double dis;
 	bool test;
 	dis = sqrt((anAgent.GetXi()[0] - xi[0])*(anAgent.GetXi()[0] - xi[0]) + (anAgent.GetXi()[1] - xi[1])*(anAgent.GetXi()[1] - xi[1]));
 	if(dis>RADIUS)
+	{
+		test = false;
+	}
+	else
+	{
+		test = true;
+	}
+	return test;
+}
+
+bool Agent::perceptionC(const Agent& anAgent)
+{
+	double dis;
+	bool test;
+	dis = sqrt((anAgent.GetXi()[0] - xi[0])*(anAgent.GetXi()[0] - xi[0]) + (anAgent.GetXi()[1] - xi[1])*(anAgent.GetXi()[1] - xi[1]));
+	
+	if(dis>c)
 	{
 		test = false;
 	}
@@ -189,7 +183,7 @@ vim[1] = 0;
 
 for(int i = 0; i<length_pop; i++)
 {
-	val = perception(pop[i]);
+	val = perceptionR(pop[i]);
 
 	if(val == true && i != pos)
 	{
@@ -220,7 +214,7 @@ vim[1] = 0;
 
 for(int i = 0; i<length_pop; i++)
 {
-	val = pop[pos].perception(pop[i]);
+	val = pop[pos].perceptionR(pop[i]);
 
 	if(val == true && i != pos)
 	{
@@ -242,22 +236,20 @@ return vim;
 double* Agent::speed3(int pos, int length_pop, int length_obs, Agent* pop, Obstacle* obs)
 {
 int K = 0;
-int dis = 0;
+int O = 0;
 bool val;
 double* vim = new double[2];
 vim[0] = 0;
 vim[1] = 0;
-int O = 0;
 double* vo = new double[2];
 vo[0] = 0;
 vo[1] = 0;
 
 for(int i = 0; i<length_pop; i++)
 {
-	val = pop[pos].perception(pop[i]);
-	dis = sqrt((pop[i].GetXi()[0] - pop[pos].GetXi()[0])*(pop[i].GetXi()[0] - pop[pos].GetXi()[0]) + (pop[i].GetXi()[1] - pop[pos].GetXi()[1])*(pop[i].GetXi()[1] - pop[pos].GetXi()[1]));
-
-	if(val == true && i != pos && dis<c)
+	val = pop[pos].perceptionC(pop[i]);
+	
+	if(i != pos && val == true)
 	{
 		K = K +1;
 		vim[0] = vim[0] + pop[i].GetXi()[0] - pop[pos].GetXi()[0];
@@ -269,38 +261,67 @@ for(int i = 0; i<length_pop; i++)
 for(int j = 0; j<length_obs; j++)
 {
 	O = O + 1;
-	vo[0] = vo[0] - obs[j].GetXo()[0];
-	vo[1] = vo[1] - obs[j].GetXo()[1];
+	vo[0] = vo[0] +  obs[j].GetXo()[0] - pop[pos].GetXi()[0];
+	vo[1] = vo[1] + obs[j].GetXo()[1] - pop[pos].GetXi()[1];
 }
 
-if(K != 0 && O != 0)
+if(K != 0)
 {
-	vim[0] = -vim[0]/K - vo[0]/O;
-	vim[1] = -vim[1]/K - vo[1]/O;
+	vim[0] = - vim[0]/K;
+	vim[1] = - vim[1]/K;
 }
+if(O != 0)
+{
+	vim[0] = vim[0] - vo[0]/O;
+	vim[1] = vim[1] - vo[1]/O;
+}
+
 delete[] vo;
+vo = NULL;
+
+return vim;
+
+}
+
+double* Agent::speed4(int pos, int length_pred, Agent* pop, Agent* pred)
+{
+	double norm = 0;
+	double* vim = new double[2];
+	vim[0] = 0;
+	vim[1] = 0;
+
+	for(int i = 0; i<length_pred ; i++)
+	{
+		norm = sqrt( (pred[i].GetXi()[0] - xi[0]) * (pred[i].GetXi()[0] - xi[0]) - (pred[i].GetXi()[1] - xi[1]) * (pred[i].GetXi()[1] - xi[1]) );
+
+		if(norm < RADIUS)
+		{
+			vim[0] = (pred[i].GetXi()[0] - xi[0])/norm;
+			vim[1] = (pred[i].GetXi()[1] - xi[1])/norm;
+		}
+	}
 return vim;
 }
 
-void Agent::speed(int pos, int length_pop, int length_obs, Agent* pop, Obstacle* obs)
+
+
+void Agent::speed(int pos, int length_pop, int length_obs, int length_pred, Agent* pop, Obstacle* obs, Agent* pred)
 {
-	//printf("Je suis dans le speed final\n");
 	double* v1 = speed1(pos, length_pop, pop);
 	double* v2 = speed2(pos, length_pop, pop);
 	double* v3 = speed3(pos, length_pop, length_obs, pop, obs);
-	//printf("%f %f\n", v1[0], v1[1]);
-	//printf("%f %f\n", v2[0], v2[1]);
-	//printf("%f %f\n", v3[0], v3[1]);
-	//printf("%f %f \n",vi[0],vi[1] );
-	vi[0] = vi[0] + dt*(gamma1*v1[0] + gamma2*v2[0] + gamma3*v3[0]);
-	vi[1] = vi[1] + dt*(gamma1*v1[1] + gamma2*v2[1] + gamma3*v3[1]);
-	//	printf("%f %f \n",vi[0],vi[1] );
+	double* v4 = speed4(pos, length_pred, pop, pred);
+	vi[0] = vi[0] + dt*(gamma1*v1[0] + gamma2*v2[0] + gamma3*v3[0] + gamma4*v4[0]);
+	vi[1] = vi[1] + dt*(gamma1*v1[1] + gamma2*v2[1] + gamma3*v3[1] + gamma4*v4[1]);
+	
 	delete [] v1;
 	v1 = NULL;
 	delete [] v2;
 	v2 = NULL;
 	delete [] v3;
 	v3 = NULL;
+	delete[] v4;
+	v4=NULL;
 }
 
 // ===========================================================================

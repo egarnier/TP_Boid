@@ -214,8 +214,8 @@ void bwindow::draw_boid(Boid* population)
         draw_fsquare(x,y,x+5,y+5,0x808080);
         //population.updateposBoid();
     }
+
     int x1=0,y1=0;
-    population->updateposBoid();
       for(int j = 0; j<population->GetNo(); j++)
     {
         x1 = (population->GetObstacle(j)).GetXo()[0];
@@ -223,6 +223,19 @@ void bwindow::draw_boid(Boid* population)
         draw_fsquare(x1,y1,x1+10,y1+10,0x008000);
        // printf("%f - %f \n", x1, y1);
     }
+
+
+    int x2=0,y2=0;
+      for(int k = 0; k<population->GetNp(); k++)
+    {
+        x2 = (population->GetPredateur(k)).GetXi()[0];
+        y2 = (population->GetPredateur(k)).GetXi()[1];
+        draw_fsquare(x2,y2,x2+5,y2+5,0x0000FF);
+       // printf("%f - %f \n", x1, y1);
+    }
+
+
+population->updateposBoid();
 }
 
 char * bwindow::get_lastkey()
