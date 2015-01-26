@@ -123,4 +123,3 @@ int* xo;
 
 
 #endif // __OBSTACLE_H__
-

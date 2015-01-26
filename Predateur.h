@@ -131,4 +131,3 @@ int nb_mange;
 
 
 #endif // __PREDATEUR_H__
-
