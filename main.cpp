@@ -12,7 +12,7 @@ int main()
     printf("%d\n",win.init());
 
 	Boid population1 = Boid();
-	population1.affiche();
+	//population1.affiche();
     win.map();
     for(;;)
     {
@@ -31,8 +31,10 @@ int main()
 		printf("configure\n"); break;
 	}
 
+
 	win.draw_fsquare(0,0,640,480,0xFFFFFF);
 	win.draw_boid(&population1);
+	
 	//population1.affiche();
 	
 

@@ -70,6 +70,9 @@ class Predateur : public Agent
     //                              Public Methods
     // =======================================================================
     void speedpred(int length_pop, Agent* pop);
+    int rest(int stop);
+    void updatePred(void);
+    void maxspeedPred(void);
 
     // =======================================================================
     //                             Public Attributes

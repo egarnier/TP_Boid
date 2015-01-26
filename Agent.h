@@ -63,6 +63,7 @@ class Agent
     //                            Accessors: setters
     // =======================================================================
     void SetVi(double* vitesse);
+    void SetXi(double* position);
     // =======================================================================
     //                                Operators
     // =======================================================================
@@ -70,7 +71,7 @@ class Agent
     // =======================================================================
     //                              Public Methods
     // =======================================================================
-    void updatepos(int pos, int length, int length_obs, int length_pred, Agent* pop, Obstacle* obs, Agent* pred);
+    void updatepos(int pos, int length, int length_obs, int length_pred, Agent* pop, Obstacle* obs, double* viX_pred, double* viY_pred);
 
     bool perceptionR(const Agent& anAgent);
     bool perceptionC(const Agent& anAgent);
@@ -80,9 +81,10 @@ class Agent
     double* speed1(int pos, int length_pop, Agent* pop);
     double* speed2(int pos, int length_pop, Agent* pop);
     double* speed3(int pos, int length_pop, int length_obs, Agent* pop, Obstacle* obs);
-    double* speed4(int pos, int length_pred, Agent* pop, Agent* pred);
-    void speed(int pos, int length_pop, int length_obs, int length_pred, Agent* pop, Obstacle* obs, Agent* pred);
+    double* speed4(int pos, int length_pred, Agent* pop, double* viX_pred, double* viY_pred);
+    void speed(int pos, int length_pop, int length_obs, int length_pred, Agent* pop, Obstacle* obs, double* viX_pred, double* viY_pred);
 
+    void alive(int a);
     // =======================================================================
     //                             Public Attributes
     // =======================================================================
@@ -117,6 +119,7 @@ class Agent
     // =======================================================================
 double* xi; // position of the agent
 double* vi; // speed of the agent
+bool vivant;
 };
 
 

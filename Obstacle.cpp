@@ -39,8 +39,8 @@
 Obstacle::Obstacle(void)
 {
 	xo = new int[2];
-	xo[0] = rand()%640;
-	xo[1] = rand()%480;
+	xo[0] = rand()%630;
+	xo[1] = rand()%470;
 	printf("%d %d \n",xo[0],xo[1]);
 }
 

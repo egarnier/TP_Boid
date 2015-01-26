@@ -211,7 +211,7 @@ void bwindow::draw_boid(Boid* population)
         x = (int)((population->GetAgent(i)).GetXi()[0]);
         y = (int)((population->GetAgent(i)).GetXi()[1]);
         //printf("%d %d \n", x,y);
-        draw_fsquare(x,y,x+5,y+5,0x808080);
+        draw_fsquare(x,y,x+3,y+3,0x808080);
         //population.updateposBoid();
     }
 
@@ -231,7 +231,6 @@ void bwindow::draw_boid(Boid* population)
         x2 = (population->GetPredateur(k)).GetXi()[0];
         y2 = (population->GetPredateur(k)).GetXi()[1];
         draw_fsquare(x2,y2,x2+5,y2+5,0x0000FF);
-       // printf("%f - %f \n", x1, y1);
     }
 
 

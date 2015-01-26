@@ -133,14 +133,25 @@ Agent* Boid::GetPop(void) const
 // Methods
 void Boid::updateposBoid(void)
 {
-	for(int i=0;i<N;i++)
-	{
-		pop[i].updatepos(i, N, No, Np, pop, obs, pred);
-	}
+	double* vitesseX_pred = new double[Np];
+	double* vitesseY_pred = new double[Np];
+
 	for(int j = 0 ; j < Np ; j++)
 	{
 		pred[j].speedpred(N, pop);
+		vitesseX_pred[j] = pred[j].GetVi()[0];
+		vitesseY_pred[j] = pred[j].GetVi()[1];
 	}
+
+	for(int i=0;i<N;i++)
+	{
+		pop[i].updatepos(i, N, No, Np, pop, obs, vitesseX_pred, vitesseY_pred);
+	}
+	
+delete[] vitesseX_pred;
+vitesseX_pred = NULL;
+delete[] vitesseY_pred;
+vitesseY_pred = NULL;
 }
 
 void Boid::affiche(void)
