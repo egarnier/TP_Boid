@@ -80,6 +80,7 @@ class Boid
     void updateposBoid(void);
     void affiche(void);
     void speed(int pos);
+    void proieMangee(void);
 
     // =======================================================================
     //                             Public Attributes

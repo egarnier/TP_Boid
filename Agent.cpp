@@ -39,12 +39,12 @@
 Agent::Agent(void)
 {
 	xi = new double[2];
-	xi[0] = rand()%641;
-	xi[1] = rand()%481;
+	xi[0] = rand()%541;
+	xi[1] = rand()%381;
 
 	vi = new double[2];
-	vi[0] = rand()%10;
-	vi[1] = rand()%10;
+	vi[0] = rand()%11;
+	vi[1] = rand()%11;
 
 	vivant = true;
 }
@@ -92,6 +92,11 @@ int Agent::GetR(void) const
 	return RADIUS;
 }
 
+bool Agent::GetVivant(void) const
+{
+	return vivant;
+}
+
 // Setters
 void Agent::SetVi(double* vitesse)
 {
@@ -122,19 +127,19 @@ void Agent::updatepos(int pos, int length_pop, int length_obs, int length_pred, 
 
 		if(posx < v)
 		{
-			vi[0] = vi[0] + 10;
+			vi[0] = vi[0] + 100;
 		}
 		if(posx > 640- v)
 		{
-			vi[0] = vi[0] - 10;
+			vi[0] = vi[0] - 100;
 		}
 		if(posy < h)
 		{
-			vi[1] = vi[1] + 10;
+			vi[1] = vi[1] + 100;
 		}
 		if(posy > 480 - h)
 		{
-			vi[1] = vi[1] - 10;
+			vi[1] = vi[1] - 100;
 		}
 		maxspeed();
 	}
@@ -340,6 +345,11 @@ void Agent::speed(int pos, int length_pop, int length_obs, int length_pred, Agen
 void Agent::alive(int a)
 {
 	if(a == 0)
+	{
+		vivant = false;
+	}
+
+	if(xi[0]>640 && xi[1]>480)
 	{
 		vivant = false;
 	}

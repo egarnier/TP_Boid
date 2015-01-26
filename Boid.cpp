@@ -134,11 +134,20 @@ Agent* Boid::GetPop(void) const
 void Boid::updateposBoid(void)
 {
 	double* vitesseX_pred = new double[Np];
+		for(int k = 0; k<Np ; k++)
+		{
+			vitesseX_pred[k] = 0;
+		}
+
 	double* vitesseY_pred = new double[Np];
+		for(int l = 0; l<Np ; l++)
+		{
+			vitesseX_pred[l] = 0;
+		}
 
 	for(int j = 0 ; j < Np ; j++)
 	{
-		pred[j].speedpred(N, pop);
+		pred[j].updatePred(N, pop);
 		vitesseX_pred[j] = pred[j].GetVi()[0];
 		vitesseY_pred[j] = pred[j].GetVi()[1];
 	}
@@ -148,10 +157,20 @@ void Boid::updateposBoid(void)
 		pop[i].updatepos(i, N, No, Np, pop, obs, vitesseX_pred, vitesseY_pred);
 	}
 	
-delete[] vitesseX_pred;
-vitesseX_pred = NULL;
-delete[] vitesseY_pred;
-vitesseY_pred = NULL;
+	int survivor = 0;
+	for(int a=0; a<N; a++)
+	{
+		if(pop[a].GetVivant() == true)
+		{
+			survivor = survivor + 1;
+		}
+	}
+	printf("il y a %d survivants \n",survivor);
+
+	delete[] vitesseX_pred;
+	vitesseX_pred = NULL;
+	delete[] vitesseY_pred;
+	vitesseY_pred = NULL;
 }
 
 void Boid::affiche(void)
@@ -160,6 +179,14 @@ void Boid::affiche(void)
 	{
 		printf("La position de l'agent %d est %f ; %f \n",i,pop[i].GetXi()[0],pop[i].GetXi()[1]);
 		printf("La  vitesse de l'agent %d est %f ; %f \n",i,pop[i].GetVi()[0],pop[i].GetVi()[1]);
+	}
+}
+
+void Boid::proieMangee(void)
+{
+	for(int i = 0; i<Np ; i++)
+	{
+		printf("Le prédateur %d a mangé %d proies.\n",i, pred[i].GetNbMange());
 	}
 }
 // ===========================================================================

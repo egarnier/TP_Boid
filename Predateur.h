@@ -56,7 +56,8 @@ class Predateur : public Agent
     // =======================================================================
     //                            Accessors: getters
     // =======================================================================
-  
+    int GetTmpStop(void) const;
+    int GetNbMange(void) const;
 
     // =======================================================================
     //                            Accessors: setters
@@ -71,7 +72,7 @@ class Predateur : public Agent
     // =======================================================================
     void speedpred(int length_pop, Agent* pop);
     int rest(int stop);
-    void updatePred(void);
+    void updatePred(int length_pop, Agent* pop);
     void maxspeedPred(void);
 
     // =======================================================================
@@ -107,6 +108,7 @@ class Predateur : public Agent
     //                             Protected Attributes
     // =======================================================================
 int temps_stop;
+int nb_mange;
 
 };
 

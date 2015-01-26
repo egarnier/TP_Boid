@@ -34,7 +34,7 @@ int main()
 
 	win.draw_fsquare(0,0,640,480,0xFFFFFF);
 	win.draw_boid(&population1);
-	
+
 	//population1.affiche();
 	
 
@@ -44,9 +44,10 @@ int main()
 	win.draw_square(200,200,220,220,0xFF00);
 	win.draw_fsquare(400,400,440,440,0xFF00);*/
 
-	
+	// population1.proieMangee();
     }
 	
+
 
 	/*// Creation list of Agent
 	srand(time(NULL));

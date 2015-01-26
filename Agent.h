@@ -58,7 +58,7 @@ class Agent
     double* GetXi(void) const;
     double* GetVi(void) const;
     int GetR(void) const;
-
+    bool GetVivant(void) const;
     // =======================================================================
     //                            Accessors: setters
     // =======================================================================

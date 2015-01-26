@@ -48,6 +48,7 @@ Predateur::Predateur(void)
 	vi[1] = rand()%Vpmax;
 
 	temps_stop = 0;
+	nb_mange = 0;
 }
 
 Predateur::Predateur(const Predateur &model)
@@ -60,7 +61,8 @@ Predateur::Predateur(const Predateur &model)
 	vi[0] = model.GetVi()[0];
 	vi[1] = model.GetVi()[1];
 
-	temps_stop = 0;
+	temps_stop = model.GetTmpStop();
+	nb_mange = model.GetNbMange();
 }
 
 // ===========================================================================
@@ -77,6 +79,18 @@ Predateur::~Predateur(void)
 // ===========================================================================
 //                                 Public Methods
 // ===========================================================================
+// Getters
+int Predateur::GetTmpStop(void) const
+{
+	return temps_stop;
+}
+
+int Predateur::GetNbMange(void) const
+{
+	return nb_mange;
+}
+
+
 void Predateur::speedpred(int length_pop, Agent* pop){
 
 	double norm = Rp;
@@ -124,7 +138,7 @@ void Predateur::speedpred(int length_pop, Agent* pop){
 			vi[1] = rand()%Vpmax; 
 		}
 	
-		updatePred();
+		//updatePred();
 
 		if(fabs(xi[0] - proie[0]) < Reat && fabs(xi[1] - proie[1]) < Reat)
 		{
@@ -132,6 +146,7 @@ void Predateur::speedpred(int length_pop, Agent* pop){
 			pop[pos].SetVi(dead_vit);
 			pop[pos].alive(0);
 			temps_stop = 1;
+			nb_mange = nb_mange + 1;
 		}
 	}
 
@@ -157,8 +172,8 @@ int Predateur::rest(int stop)
 	}
 	else
 	{
-		vi[0] = rand()%20;
-		vi[1] = rand()%20;
+		vi[0] = rand()%Vpmax;
+		vi[1] = rand()%Vpmax;
 		stop = 0;
 	}
 
@@ -166,8 +181,11 @@ int Predateur::rest(int stop)
 }
 
 
-void Predateur::updatePred(void)
+void Predateur::updatePred(int length_pop, Agent* pop)
 {
+
+	speedpred(length_pop, pop);
+
 	double posx = xi[0] + dt*vi[0];
 	double posy = xi[1] + dt*vi[1];		
 	int h = 20;
@@ -178,19 +196,19 @@ void Predateur::updatePred(void)
 
 	if(posx < v)
 	{
-		vi[0] = vi[0] + 10;
+		vi[0] = vi[0] + 100;
 	}
 	if(posx > 640 - v)
 	{
-		vi[0] = vi[0] - 10;
+		vi[0] = vi[0] - 100;
 	}
 	if(posy < h)
 	{
-		vi[1] = vi[1] + 10;
+		vi[1] = vi[1] + 100;
 	}
 	if(posy > 480 - h)
 	{
-		vi[1] = vi[1] - 10;
+		vi[1] = vi[1] - 100;
 	}
 	maxspeedPred();
 }
