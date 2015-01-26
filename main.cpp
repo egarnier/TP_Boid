@@ -5,10 +5,10 @@
 
 int main()
 {
-	/*bwindow win(640,480);
+	bwindow win(640,480);
     printf("%d\n",win.init());
     win.map();
-    for(;;)
+    /*for(;;)
     {
 	int ev = win.parse_event();
 	switch(ev)
@@ -29,11 +29,11 @@ int main()
 	win.draw_text(10,10,0x0,"Hello World",strlen("Hello World"));
 	win.draw_square(200,200,220,220,0xFF00);
 	win.draw_fsquare(400,400,440,440,0xFF00);
-    }*/
+    }
 
-	
+	*/
 
-	// Creation list of Agent
+/*	// Creation list of Agent
 	srand(time(NULL));
 
 	Boid population1;
@@ -49,6 +49,6 @@ int main()
 	population1.speed(0);
 	printf("Les coordonnées après speed1 sont :\n");
 	population1.affiche();
-	
+*/	
     return 0;
 }
