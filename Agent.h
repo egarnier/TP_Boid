@@ -21,9 +21,8 @@
 // ===========================================================================
 //                                Project Files
 // ===========================================================================
-
-
-
+#include "Obstacle.h"
+//#include "Predateur.h"
 
 // ===========================================================================
 //                              Class declarations
@@ -46,7 +45,7 @@ class Agent
     //                               Constructors
     // =======================================================================
     Agent(void);
-    Agent(double xi1, double xi2, double vi1, double vi2);
+    Agent(const Agent &model);
 
     // =======================================================================
     //                                Destructor
@@ -59,11 +58,12 @@ class Agent
     double* GetXi(void) const;
     double* GetVi(void) const;
     int GetR(void) const;
-
+    bool GetVivant(void) const;
     // =======================================================================
     //                            Accessors: setters
     // =======================================================================
     void SetVi(double* vitesse);
+    void SetXi(double* position);
     // =======================================================================
     //                                Operators
     // =======================================================================
@@ -71,12 +71,20 @@ class Agent
     // =======================================================================
     //                              Public Methods
     // =======================================================================
-    void updatepos(void);
-    void updateXneg(int a);
-    void updateYneg(int a);
-    void updateXpos(int a);
-    void updateYpos(int a);
-    bool perception(const Agent& anAgent);
+    void updatepos(int pos, int length, int length_obs, int length_pred, Agent* pop, Obstacle* obs, double* viX_pred, double* viY_pred);
+
+    bool perceptionR(const Agent& anAgent);
+    bool perceptionC(const Agent& anAgent);
+
+    void maxspeed(void);
+
+    double* speed1(int pos, int length_pop, Agent* pop);
+    double* speed2(int pos, int length_pop, Agent* pop);
+    double* speed3(int pos, int length_pop, int length_obs, Agent* pop, Obstacle* obs);
+    double* speed4(int pos, int length_pred, Agent* pop, double* viX_pred, double* viY_pred);
+    void speed(int pos, int length_pop, int length_obs, int length_pred, Agent* pop, Obstacle* obs, double* viX_pred, double* viY_pred);
+
+    void alive(int a);
     // =======================================================================
     //                             Public Attributes
     // =======================================================================
@@ -111,7 +119,7 @@ class Agent
     // =======================================================================
 double* xi; // position of the agent
 double* vi; // speed of the agent
-static int RADIUS; // radius of perception of the agent
+bool vivant;
 };
 
 
@@ -133,4 +141,3 @@ static int RADIUS; // radius of perception of the agent
 
 
 #endif // __AGENT_H__
-

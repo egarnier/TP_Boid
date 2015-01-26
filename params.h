@@ -1,0 +1,15 @@
+#define c 20
+#define gamma1 0.004
+#define gamma2 0.06
+#define gamma3 0.001
+#define gamma4 100000000
+#define dt 0.02
+#define RADIUS 50
+#define nb 100
+#define nbo 5
+#define nbp 5
+#define Vmax 10
+#define Rp 50
+#define Vpmax 20
+#define Reat 1
+#define pause 1000

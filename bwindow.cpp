@@ -201,6 +201,42 @@ void bwindow::draw_fsquare(int x1,int y1,int x2,int y2,unsigned int color)
  XFillRectangle(display, win, gc, x1, y1, x2-x1, y2-y1);
  XSetForeground(display, gc,0x0);
 }
+
+void bwindow::draw_boid(Boid* population)
+{
+    int x=0,y=0;
+    
+    for(int i=0; i<population->GetN(); i++)
+    {
+        x = (int)((population->GetAgent(i)).GetXi()[0]);
+        y = (int)((population->GetAgent(i)).GetXi()[1]);
+        //printf("%d %d \n", x,y);
+        draw_fsquare(x,y,x+3,y+3,0x808080);
+        //population.updateposBoid();
+    }
+
+    int x1=0,y1=0;
+      for(int j = 0; j<population->GetNo(); j++)
+    {
+        x1 = (population->GetObstacle(j)).GetXo()[0];
+        y1 = (population->GetObstacle(j)).GetXo()[1];
+        draw_fsquare(x1,y1,x1+10,y1+10,0x008000);
+       // printf("%f - %f \n", x1, y1);
+    }
+
+
+    int x2=0,y2=0;
+      for(int k = 0; k<population->GetNp(); k++)
+    {
+        x2 = (population->GetPredateur(k)).GetXi()[0];
+        y2 = (population->GetPredateur(k)).GetXi()[1];
+        draw_fsquare(x2,y2,x2+5,y2+5,0x0000FF);
+    }
+
+
+population->updateposBoid();
+}
+
 char * bwindow::get_lastkey()
 {
     return lastkey;
@@ -215,4 +251,3 @@ unsigned int bwindow::get_height()
 {
     return height;
 }
-

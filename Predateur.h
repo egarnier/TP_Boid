@@ -6,8 +6,8 @@
 
 
 
-#ifndef __BOID_H__
-#define __BOID_H__
+#ifndef __PREDATEUR_H__
+#define __PREDATEUR_H__
 
 
 // ===========================================================================
@@ -22,8 +22,6 @@
 //                                Project Files
 // ===========================================================================
 #include "Agent.h"
-#include "Obstacle.h"
-#include "Predateur.h"
 
 
 
@@ -36,7 +34,7 @@
 
 
 
-class Boid
+class Predateur : public Agent
 {
   public :
     
@@ -47,24 +45,19 @@ class Boid
     // =======================================================================
     //                               Constructors
     // =======================================================================
-    Boid(void);
-    Boid(const Boid &model);
+    Predateur(void);
+    Predateur(const Predateur &model);
 
     // =======================================================================
     //                                Destructor
     // =======================================================================
-    virtual ~Boid(void);
+    virtual ~Predateur(void);
 
     // =======================================================================
     //                            Accessors: getters
     // =======================================================================
-    int GetN (void) const;
-    int GetNo(void) const;
-    int GetNp(void) const;
-    Agent GetAgent(int pos) const;
-    Obstacle GetObstacle(int pos) const;
-    Predateur GetPredateur(int pos) const;
-    Agent* GetPop(void) const;
+    int GetTmpStop(void) const;
+    int GetNbMange(void) const;
 
     // =======================================================================
     //                            Accessors: setters
@@ -77,10 +70,10 @@ class Boid
     // =======================================================================
     //                              Public Methods
     // =======================================================================
-    void updateposBoid(void);
-    void affiche(void);
-    void speed(int pos);
-    void proieMangee(void);
+    void speedpred(int length_pop, Agent* pop);
+    int rest(int stop);
+    void updatePred(int length_pop, Agent* pop);
+    void maxspeedPred(void);
 
     // =======================================================================
     //                             Public Attributes
@@ -95,17 +88,17 @@ class Boid
     // =======================================================================
     //                            Forbidden Constructors
     // =======================================================================
-    /*Boid(void)
+    /*Template_class(void)
     {
       printf("%s:%d: error: call to forbidden constructor.\n", __FILE__, __LINE__);
       exit(EXIT_FAILURE);
     };*/
-    /*Boid(const Boid &model)
+   /* Predateur(const Predateur &model)
     {
       printf("%s:%d: error: call to forbidden constructor.\n", __FILE__, __LINE__);
       exit(EXIT_FAILURE);
-    };*/
-
+    };
+*/
 
     // =======================================================================
     //                              Protected Methods
@@ -114,12 +107,9 @@ class Boid
     // =======================================================================
     //                             Protected Attributes
     // =======================================================================
-    Agent* pop; // Population of agents
-    int N; // Length of population
-    int No; // Number of Obstacle
-    Obstacle* obs; // Obstacle 
-    int Np; // Number of predator
-    Predateur* pred; // Population predateur
+int temps_stop;
+int nb_mange;
+
 };
 
 
@@ -140,4 +130,5 @@ class Boid
 // ===========================================================================
 
 
-#endif // __BOID_H__
+#endif // __PREDATEUR_H__
+
